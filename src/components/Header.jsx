@@ -1,7 +1,9 @@
+import "./Header.css";
+
 function Header() {
   return (
-    <header style={{ padding: "20px", background: "#222", color: "#fff" }}>
-      <h2>Minha Loja</h2>
+    <header className="header">
+      <h2>🛍️ Minha Loja</h2>
     </header>
   );
 }
