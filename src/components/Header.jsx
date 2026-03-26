@@ -3,7 +3,7 @@ import "./Header.css";
 function Header() {
   return (
     <header className="header">
-      <h2>🛍️ Minha Loja</h2>
+      <h2> 🛒 Minha Loja</h2>
     </header>
   );
 }
