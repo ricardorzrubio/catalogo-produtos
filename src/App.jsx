@@ -1,29 +1,29 @@
 import { useState } from "react";
-import Header from "./components/Header";
 import { Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart"; // Importação da nova página
+import { CartProvider } from "./contexts/CartContext";
 
 function App() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("");
 
   return (
-    <>
+    <CartProvider>
       <Header
         setCategoriaSelecionada={setCategoriaSelecionada}
         categoriaSelecionada={categoriaSelecionada}
       />
-
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Home categoriaSelecionada={categoriaSelecionada} />
-          }
+        <Route 
+          path="/" 
+          element={<Home categoriaSelecionada={categoriaSelecionada} />} 
         />
         <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} /> {/* Nova rota do Carrinho */}
       </Routes>
-    </>
+    </CartProvider>
   );
 }
 

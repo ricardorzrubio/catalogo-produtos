@@ -5,12 +5,20 @@ import "../App.css";
 function Home({ categoriaSelecionada }) {
   const [produtos, setProdutos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState(null); // Estado para erro
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Erro ao buscar produtos");
+        return res.json();
+      })
       .then(data => {
         setProdutos(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setErro(err.message);
         setLoading(false);
       });
   }, []);
@@ -19,19 +27,17 @@ function Home({ categoriaSelecionada }) {
     ? produtos.filter(p => p.category === categoriaSelecionada)
     : produtos;
 
+  if (loading) return <p className="loading">Carregando produtos...</p>;
+  if (erro) return <p className="error" style={{color: 'red', textAlign: 'center'}}>{erro}</p>;
+
   return (
     <div className="container">
       <h1>Produtos</h1>
-
-      {loading ? (
-        <p className="loading">Carregando...</p>
-      ) : (
-        <div className="grid">
-          {produtosFiltrados.map(prod => (
-            <ProductCard key={prod.id} produto={prod} />
-          ))}
-        </div>
-      )}
+      <div className="grid">
+        {produtosFiltrados.map(prod => (
+          <ProductCard key={prod.id} produto={prod} />
+        ))}
+      </div>
     </div>
   );
 }
