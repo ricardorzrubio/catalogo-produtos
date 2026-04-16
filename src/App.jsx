@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart"; // Importação da nova página
 import { CartProvider } from "./contexts/CartContext";
+import "./styles/App.css"; // Atualizado com a pasta styles
 
 function App() {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("");

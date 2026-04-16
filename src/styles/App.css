@@ -1,0 +1,91 @@
+/* ESTILOS GLOBAIS DA ESTRUTURA */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5; /* Fundo leve cinza para destacar os cards brancos */
+  color: #333;
+}
+
+/* O Container limita a largura do conteúdo (texto/cards) 
+   para não ficar espalhado demais em telas UltraWide, 
+   mas o fundo do site continua ocupando 100%.
+*/
+.container {
+  padding: 20px;
+  width: 100%;
+  max-width: 1400px; /* Aumentado para preencher melhor a tela */
+  margin: 0 auto;    /* Centraliza o conteúdo horizontalmente */
+  box-sizing: border-box;
+}
+
+/* --- COMPONENTES GLOBAIS REUTILIZÁVEIS --- */
+
+/* Botão de Adicionar (usado em Detalhes e possivelmente na Home) */
+.btn-adicionar {
+  background-color: #28a745;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-adicionar:hover {
+  background-color: #218838;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-adicionar:active {
+  transform: translateY(-1px);
+}
+
+/* Estilos de Quantidade (usados na página de Carrinho) */
+.quantidade-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #eee;
+  padding: 6px 12px;
+  border-radius: 50px;
+  border: 1px solid #ddd;
+  width: fit-content;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.btn-quantidade {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-quantidade:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+.quantidade-numero {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  min-width: 25px;
+  text-align: center;
+  user-select: none;
+}

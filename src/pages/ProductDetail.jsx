@@ -1,18 +1,20 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { CartContext } from "../contexts/CartContext";
+import { useCart } from "../hooks/useCart"; // Novo Hook personalizado
+import { getProductById } from "../services/api"; // Service
+import "../styles/pages/ProductDetail.css";
 
 function ProductDetail() {
   const { id } = useParams();
   const [produto, setProduto] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  // Consumindo a função de Adicionar do Estado Global
-  const { addToCart } = useContext(CartContext);
+  // Abstração do contexto
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then(res => res.json())
+    // Busca isolada no service
+    getProductById(id)
       .then(data => {
         setProduto(data);
         setLoading(false);
@@ -20,39 +22,30 @@ function ProductDetail() {
       .catch(() => setLoading(false));
   }, [id]);
 
-  // Feedback de carregamento conforme requisitos
   if (loading) return <p className="loading">Carregando detalhes...</p>;
-  if (!produto) return <p>Produto não encontrado.</p>;
+  if (!produto) return <p className="loading">Produto não encontrado.</p>;
 
   return (
-    <div style={{ padding: "40px", textAlign: "center" }}>
-      <div style={{ 
-        display: 'flex', 
-        gap: '40px', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        flexWrap: 'wrap' 
-      }}>
-        <img src={produto.image} width="300" alt={produto.title} style={{ objectFit: 'contain' }} />
+    <div className="container product-detail-container">
+      <div className="product-detail-card">
+        <img 
+          src={produto.image} 
+          alt={produto.title} 
+          className="product-detail-image" 
+        />
         
-        <div style={{ maxWidth: "500px", textAlign: "left" }}>
-          <h1>{produto.title}</h1>
-          <p style={{ fontSize: "16px", lineHeight: "1.6", color: "#555" }}>
-            {produto.description}
-          </p>
+        <div className="product-detail-info">
+          <h1 className="product-detail-title">{produto.title}</h1>
+          <p className="product-detail-description">{produto.description}</p>
           
-          <h2 style={{ color: "green", margin: "20px 0" }}>
-            {produto.price.toLocaleString("pt-BR", {
-              style: "currency",
-              currency: "BRL",
+          <h2 className="product-detail-price">
+            {produto.price.toLocaleString("pt-BR", { 
+              style: "currency", 
+              currency: "BRL" 
             })}
           </h2>
 
-          {/* Botão estilizado com classe do App.css  */}
-          <button 
-            className="btn-adicionar" 
-            onClick={() => addToCart(produto)}
-          >
+          <button className="btn-adicionar" onClick={() => addToCart(produto)}>
             <span>🛒</span> Adicionar ao Carrinho
           </button>
         </div>
