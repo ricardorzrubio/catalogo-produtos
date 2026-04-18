@@ -1,22 +1,19 @@
 /* src/styles/pages/Cart.css */
 
-/* Container geral do carrinho */
 .cart-page-container {
-  max-width: 1000px; /* Aumentado para preencher melhor a tela (pedaçoda UX) */
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Ajuste do cabeçalho para remover o "buraco gigante" */
 .cart-header-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 10px; /* Reduzido drasticamente para aproximar o card */
-  gap: 10px; /* Espaço pequeno entre botão e título H1 */
+  margin-bottom: 10px;
+  gap: 10px;
 }
 
-/* Garante que o H1 não tenha margin excessiva */
 .cart-header-actions h1 {
   margin: 0;
   font-size: 28px;
@@ -27,7 +24,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   overflow: hidden;
-  margin-top: 10px; /* Pequeno respiro entre o título e o card */
+  margin-top: 10px;
 }
 
 .cart-item {
@@ -102,10 +99,31 @@
   margin-left: 10px;
 }
 
-.cart-buttons-final {
+.cart-actions-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.cart-buttons-right {
   display: flex;
   gap: 15px;
-  justify-content: flex-end;
+}
+
+.btn-historico {
+  background: white;
+  border: 1px solid #007bff;
+  color: #007bff;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.btn-historico:hover {
+  background: #f0f7ff;
 }
 
 .btn-limpar {
@@ -130,12 +148,7 @@
   transition: 0.3s;
 }
 
-.btn-finalizar:hover {
-  background: #218838;
-  transform: scale(1.02);
-}
-
-/* MODAL / POPUP */
+/* --- MODAL / POPUP AJUSTADO --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -160,12 +173,23 @@
 }
 
 .modal-icon {
-  font-size: 50px;
-  margin-bottom: 15px;
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+/* CORREÇÃO DO TEXTO INVISÍVEL NO POPUP */
+.modal-content h2 {
+  color: #1a1a1a !important; /* Cor escura para total visibilidade */
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.modal-content p {
+  color: #555;
+  margin-bottom: 20px;
 }
 
 .btn-modal-ok {
-  margin-top: 20px;
   background: #28a745;
   color: white;
   border: none;
@@ -173,6 +197,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  font-size: 16px;
 }
 
 @keyframes slideUp {

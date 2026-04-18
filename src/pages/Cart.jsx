@@ -16,7 +16,7 @@ function Cart() {
 
   const confirmarSucesso = () => {
     setShowModal(false);
-    finalizePurchase(); // Agora salva no histórico e limpa o carrinho
+    finalizePurchase();
   };
 
   return (
@@ -29,7 +29,7 @@ function Cart() {
       {cart.length === 0 ? (
         <div style={{ textAlign: 'center', marginTop: '40px' }}>
           <p>O carrinho está vazio.</p>
-          <button className="btn-historico-vazio" onClick={() => navigate("/history")}>Ver Histórico de Compras</button>
+          <button className="btn-historico" style={{marginTop: '20px'}} onClick={() => navigate("/history")}>Ver Histórico de Compras</button>
         </div>
       ) : (
         <div className="cart-wrapper">
@@ -61,7 +61,6 @@ function Cart() {
             </h2>
             
             <div className="cart-actions-row">
-              {/* Botão no canto esquerdo */}
               <button className="btn-historico" onClick={() => navigate("/history")}>📜 Ver Histórico</button>
               
               <div className="cart-buttons-right">
