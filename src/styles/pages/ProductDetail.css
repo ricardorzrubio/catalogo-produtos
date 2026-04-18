@@ -1,25 +1,35 @@
-/* src/styles/ProductDetail.css */
+/* src/styles/pages/ProductDetail.css */
 
 .product-detail-container {
   min-height: 80vh;
   display: flex;
+  flex-direction: column; /* Organiza botão e card verticalmente */
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  justify-content: flex-start; /* Alinha o conteúdo no topo */
+  padding: 40px 20px;
+}
+
+/* Novo container para o botão de voltar */
+.detail-header-actions {
+  width: 100%;
+  max-width: 1000px; /* Mesma largura do card para alinhar */
+  text-align: left;
+  margin-bottom: 25px; /* Respiro entre o botão e o card */
 }
 
 .product-detail-card {
   display: flex;
-  gap: 40px;
+  gap: 60px;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap; /* Garante que quebre a linha no mobile */
+  flex-wrap: wrap;
   max-width: 1000px;
   width: 100%;
   background-color: white;
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  position: relative; /* Para garantir o alinhamento correto dos itens */
 }
 
 .product-detail-image {
@@ -32,7 +42,7 @@
 
 .product-detail-info {
   flex: 1;
-  min-width: 300px; /* Evita que o texto fique muito espremido */
+  min-width: 300px;
   text-align: left;
 }
 

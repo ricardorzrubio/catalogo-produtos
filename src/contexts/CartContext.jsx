@@ -3,16 +3,24 @@ import { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  // Tenta carregar o carrinho do localStorage ao iniciar
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("carrinho_loja");
     return savedCart ? JSON.parse(savedCart) : [];
   });
 
-  // Sempre que o 'cart' mudar, salva no localStorage
+  // Novo estado para o histórico
+  const [history, setHistory] = useState(() => {
+    const savedHistory = localStorage.getItem("historico_vendas");
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  });
+
   useEffect(() => {
     localStorage.setItem("carrinho_loja", JSON.stringify(cart));
   }, [cart]);
+
+  useEffect(() => {
+    localStorage.setItem("historico_vendas", JSON.stringify(history));
+  }, [history]);
 
   function addToCart(product) {
     const itemExists = cart.find((item) => item.id === product.id);
@@ -32,14 +40,43 @@ export function CartProvider({ children }) {
         item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
       ));
     } else {
-      setCart(cart.filter((item) => item.id !== productId));
+      removeItemCompletely(productId);
     }
+  }
+
+  function removeItemCompletely(productId) {
+    setCart(cart.filter((item) => item.id !== productId));
+  }
+
+  function clearCart() {
+    setCart([]);
+  }
+
+  // Função para finalizar a compra e gerar o registro no histórico
+  function finalizePurchase() {
+    const newOrder = {
+      id: Date.now(),
+      date: new Date().toLocaleString("pt-BR"),
+      items: [...cart],
+      total: totalValue
+    };
+    setHistory([newOrder, ...history]); // Adiciona no topo do histórico
+    clearCart();
   }
 
   const totalValue = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, totalValue }}>
+    <CartContext.Provider value={{ 
+      cart, 
+      history,
+      addToCart, 
+      removeFromCart, 
+      removeItemCompletely, 
+      clearCart, 
+      finalizePurchase,
+      totalValue 
+    }}>
       {children}
     </CartContext.Provider>
   );

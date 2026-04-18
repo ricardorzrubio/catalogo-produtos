@@ -1,48 +1,85 @@
-import { useContext } from "react";
-import { CartContext } from "../contexts/CartContext";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../hooks/useCart";
 import "../styles/pages/Cart.css";
 
 function Cart() {
-  const { cart, addToCart, removeFromCart, totalValue } = useContext(CartContext);
+  const { cart, addToCart, removeFromCart, removeItemCompletely, clearCart, finalizePurchase, totalValue } = useCart();
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+
+  const handleFinalizarCompra = () => {
+    if (cart.length > 0) {
+      setShowModal(true);
+    }
+  };
+
+  const confirmarSucesso = () => {
+    setShowModal(false);
+    finalizePurchase(); // Agora salva no histórico e limpa o carrinho
+  };
 
   return (
-    <div className="container" style={{ maxWidth: "900px", margin: "0 auto" }}>
-      <h1>Carrinho</h1>
+    <div className="container cart-page-container">
+      <div className="cart-header-actions">
+         <button className="btn-voltar" onClick={() => navigate("/")}>← Continuar Comprando</button>
+         <h1>Seu Carrinho</h1>
+      </div>
+
       {cart.length === 0 ? (
-        <p style={{textAlign: 'center'}}>O carrinho está vazio.</p>
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <p>O carrinho está vazio.</p>
+          <button className="btn-historico-vazio" onClick={() => navigate("/history")}>Ver Histórico de Compras</button>
+        </div>
       ) : (
-        <div style={{ backgroundColor: "white", borderRadius: "10px", padding: "10px", boxShadow: "0 2px 10px rgba(0,0,0,0.1)" }}>
-          {cart.map((item) => (
-            <div key={item.id} style={{ 
-              display: "flex", 
-              alignItems: "center", 
-              borderBottom: "1px solid #eee", 
-              padding: "20px" 
-            }}>
-              <img src={item.image} width="80" height="80" alt={item.title} style={{ objectFit: "contain" }} />
-              
-              <div style={{ flex: 1, padding: "0 25px", textAlign: "left" }}>
-                <p style={{ fontWeight: "bold", fontSize: "18px", margin: "0 0 10px 0" }}>{item.title}</p>
-                
-                <div className="quantidade-container">
-                  <button className="btn-quantidade" onClick={() => removeFromCart(item.id)}>−</button>
-                  <span className="quantidade-numero">{item.quantity}</span>
-                  <button className="btn-quantidade" onClick={() => addToCart(item)}>+</button>
+        <div className="cart-wrapper">
+          <div className="cart-list-container">
+            {cart.map((item) => (
+              <div key={item.id} className="cart-item">
+                <img src={item.image} width="80" height="80" alt={item.title} className="cart-item-img" />
+                <div className="cart-item-info">
+                  <p className="cart-item-title">{item.title}</p>
+                  <div className="cart-controls">
+                    <div className="quantidade-container">
+                      <button className="btn-quantidade btn-menos" onClick={() => removeFromCart(item.id)}>−</button>
+                      <span className="quantidade-numero">{item.quantity}</span>
+                      <button className="btn-quantidade" onClick={() => addToCart(item)}>+</button>
+                    </div>
+                    <button className="btn-remover-tudo" title="Remover item" onClick={() => removeItemCompletely(item.id)}>🗑️</button>
+                  </div>
+                </div>
+                <div className="cart-item-price">
+                  <p>{(item.price * item.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
                 </div>
               </div>
-
-              <div style={{ textAlign: "right" }}>
-                <p style={{ fontWeight: "bold", fontSize: "20px", color: "#28a745" }}>
-                  {(item.price * item.quantity).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-                </p>
+            ))}
+          </div>
+          
+          <div className="cart-footer">
+            <h2 className="total-label">
+              Total Checkout: <span className="total-highlight">{totalValue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</span>
+            </h2>
+            
+            <div className="cart-actions-row">
+              {/* Botão no canto esquerdo */}
+              <button className="btn-historico" onClick={() => navigate("/history")}>📜 Ver Histórico</button>
+              
+              <div className="cart-buttons-right">
+                <button className="btn-limpar" onClick={clearCart}>Limpar Carrinho</button>
+                <button className="btn-finalizar" onClick={handleFinalizarCompra}>Finalizar Compra</button>
               </div>
             </div>
-          ))}
-          
-          <div style={{ padding: "20px", textAlign: "right" }}>
-            <h2 style={{ fontSize: "24px" }}>
-              Total Checkout: {totalValue.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
-            </h2>
+          </div>
+        </div>
+      )}
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-icon">✅</div>
+            <h2>Compra realizada com sucesso!</h2>
+            <p>Seu pedido foi processado e salvo no seu histórico.</p>
+            <button className="btn-modal-ok" onClick={confirmarSucesso}>OK</button>
           </div>
         </div>
       )}

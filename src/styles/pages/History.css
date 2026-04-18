@@ -1,0 +1,92 @@
+/* src/styles/pages/History.css */
+
+.history-page-container {
+  max-width: 900px; /* Um pouco mais largo para UX melhor */
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.history-header {
+  text-align: left;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+}
+
+/* AJUSTE DO TÍTULO QUE ESTAVA INVISÍVEL */
+.history-header h1 {
+  font-size: 32px;
+  color: #1a1a1a !important; /* Força uma cor escura visível */
+  margin: 20px 0 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border: 1px solid #f0f0f0;
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f8f9fa;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.order-date {
+  font-weight: bold;
+  color: #555;
+  font-size: 16px;
+}
+
+.order-total {
+  font-size: 20px;
+  font-weight: 800;
+  color: #28a745;
+}
+
+.history-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.history-item-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 5px 0;
+}
+
+.history-item-thumb {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  background: #fff;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.history-item-name {
+  flex: 1;
+  text-align: left;
+  font-size: 15px;
+  color: #333;
+}
+
+.history-item-qty {
+  font-weight: bold;
+  background: #f0f0f0;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #666;
+}
